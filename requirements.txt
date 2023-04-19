@@ -1,0 +1,6 @@
+fastapi[all]
+bottleneck
+pandas
+beautifulsoup4
+requests
+numpy
