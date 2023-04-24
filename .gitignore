@@ -10,6 +10,9 @@ ENV/
 env.bak/
 venv.bak/
 
+#PythonProj
+.idea
+
 # cotegory
-/model/saved/ease_model.p
-/dataset/tag_problem_mat_all.csv
+model/saved/e*
+dataset/*
