@@ -12,6 +12,8 @@ venv.bak/
 
 #PythonProj
 .idea
+__pycache__/*
+model/__pycache__/*
 
 # cotegory
 model/saved/e*
