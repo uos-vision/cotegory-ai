@@ -11,7 +11,7 @@ env.bak/
 venv.bak/
 
 #PythonProj
-.idea
+.idea/*
 __pycache__/*
 model/__pycache__/*
 

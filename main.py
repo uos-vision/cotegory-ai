@@ -5,7 +5,9 @@ from pydantic import BaseModel
 import config as cf
 import crawling as cr
 import os
+import pandas as pd
 from model import model
+from train.train import train_model
 
 # uvicorn main:app --reload
 
@@ -47,12 +49,25 @@ async def recommand(item : Item):
 
     return recommand_num
 
+###### 추천 모델 다시 불러오기 ######
 @app.post("/model")
 async def reload_model():
-    cf.ease = cf.model_setting()
-    cf.tag_problem_mat = cf.dataset_setting()
-    return '모델 세팅 완료'
-@app.post("/train")
-async def train():
+    # 모델
+    cf.ease = model.get_model(cf.model_path)
 
-    return '훈련 완료'
+    # 데이터
+    cf.tag_problem_mat = pd.read_csv(cf.dataset_path, index_col=0)
+    cf.tag_problem_mat = cf.tag_problem_mat.T[cf.selected_tags].T
+    cf.selected_probs_by_tags, cf.idx_to_num = cf.set_tag_problem(cf.tag_problem_mat)
+
+    return '모델 세팅 완료'
+
+###### 추천 모델 재 훈련 ######
+class TrainItem(BaseModel):
+    model_name : str
+    cfg : dict
+
+@app.post("/train")
+async def train(item : TrainItem):
+    msg = train_model(item.model_name, item.cfg)
+    return msg
