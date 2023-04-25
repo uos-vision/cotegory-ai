@@ -51,7 +51,7 @@ async def recommand(item : Item):
 
 ###### 추천 모델 다시 불러오기 ######
 @app.post("/model")
-async def reload_model():
+def reload_model():
     # 모델
     cf.ease = model.get_model(cf.model_path)
 
@@ -60,7 +60,7 @@ async def reload_model():
     cf.tag_problem_mat = cf.tag_problem_mat.T[cf.selected_tags].T
     cf.selected_probs_by_tags, cf.idx_to_num = cf.set_tag_problem(cf.tag_problem_mat)
 
-    return '모델 세팅 완료'
+    return '모델 세팅'
 
 ###### 추천 모델 재 훈련 ######
 class TrainItem(BaseModel):
@@ -68,6 +68,6 @@ class TrainItem(BaseModel):
     cfg : dict
 
 @app.post("/train")
-async def train(item : TrainItem):
-    msg = train_model(item.model_name, item.cfg)
-    return msg
+def train(item : TrainItem):
+    train_model(item.model_name, item.cfg)
+    return '훈련 발생'

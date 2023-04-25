@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import numpy as np
+import random
 import time
 
 #####################################
@@ -15,7 +16,15 @@ def add_ids(page_num, user_ids: list):
     soup = BeautifulSoup(data.text, 'html.parser')
     trs = soup.select('tbody > tr')
 
-    for tr in trs:
+    user_len = len(trs) # 최대 100명 임
+    sample_len = 5
+    if user_len < sample_len :
+        sample_len = user_len
+
+    sample_nums = random.sample(range(0,user_len),sample_len)
+
+    for num in sample_nums:
+        tr = trs[num]
         user_ids.append(tr.select_one('td:nth-child(2) > a').text)
 
 def add_group_ids(group_num, page_num, user_ids: list):
@@ -42,6 +51,7 @@ def gen_user_problem_mat(id, user_problem: dict, problem_num_set: set):
             # print(problem_num)
             user_problem[id].append(problem_num)
             problem_num_set.add(problem_num)
+
 def add_to_user_problem_mat(idx, id, user_problem_mat: np.array):
     data = requests.get(f'https://www.acmicpc.net/user/{id}', headers=headers)
     soup = BeautifulSoup(data.text, 'html.parser')
