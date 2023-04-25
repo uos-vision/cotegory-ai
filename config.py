@@ -34,28 +34,32 @@ selected_tags = ['그리디 알고리즘', '다이나믹 프로그래밍', '브�
 # 모델 불러오기
 model_dir = './model/saved'
 model_file_name = 'ease_model'
-try:
-    model_path, model_link_path = call_pre_path(model_dir, model_file_name)
-except:
-    print("기본 모델로 설정")
-    model_src_file_name = 'ease_model_20230401.p'
-    model_path, model_link_path = call_pre_path(model_dir,model_file_name,model_src_file_name)
-print("모델 경로 : " + model_path)
-ease = model.get_model(model_path)
 
 # 데이터 셋 불러오기
 dataset_dir = './dataset'
 dataset_file_name = 'tag_problem_mat_all'
+
 try:
+    model_path, model_link_path = call_pre_path(model_dir, model_file_name)
+
     dataset_path, dataset_link_path = call_pre_path(dataset_dir,dataset_file_name)
+    tag_problem_mat = pd.read_csv(dataset_path, index_col=0)
+    tag_problem_mat = tag_problem_mat.T[selected_tags].T
 except:
+    print("기본 모델로 설정")
+    model_src_file_name = 'ease_model_20230401.p'
+    model_path, model_link_path = call_pre_path(model_dir,model_file_name,model_src_file_name)
+
     print("기본 데이터로 설정")
     dataset_src_file_name = 'tag_problem_mat_all_20230401.csv'
     dataset_path, dataset_link_path = call_pre_path(dataset_dir,dataset_file_name,dataset_src_file_name)
-print("데이터셋 경로 : " + dataset_path)
+    tag_problem_mat = pd.read_csv(dataset_path, index_col=0)
+    tag_problem_mat = tag_problem_mat.T[selected_tags].T
 
-tag_problem_mat = pd.read_csv(dataset_path, index_col=0)
-tag_problem_mat = tag_problem_mat.T[selected_tags].T
+print("데이터셋 경로 : " + dataset_path)
+print("모델 경로 : " + model_path)
+
+ease = model.get_model(model_path)
 
 # 훈련한 문제 개수 설정
 st_pb_num = 1000
