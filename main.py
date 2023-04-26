@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI
 import numpy as np
 import bottleneck as bn
@@ -22,7 +23,7 @@ class Item(BaseModel):
     handle: str = None
     tag: str
 
-@app.post("/recommand")
+@app.post(path = "/recommand")
 async def recommand(item : Item):
     assert item.tag in cf.selected_tags, '리스트에 없는 태그입니다.'
 
@@ -50,7 +51,7 @@ async def recommand(item : Item):
     return recommand_num
 
 ###### 추천 모델 다시 불러오기 ######
-@app.post("/model")
+@app.post(path = "/model")
 def reload_model():
     # 모델
     cf.ease = model.get_model(cf.model_path)
@@ -67,7 +68,11 @@ class TrainItem(BaseModel):
     model_name : str
     cfg : dict
 
-@app.post("/train")
+@app.post(path = "/train")
 def train(item : TrainItem):
     train_model(item.model_name, item.cfg)
     return '훈련 발생'
+
+
+if __name__ == "__main__" :
+    uvicorn.run(app, port=8000, reload=True)

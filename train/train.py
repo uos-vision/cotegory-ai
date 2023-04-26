@@ -9,6 +9,7 @@ import time
 
 def train_model(model_name : str , cfg : dict):
     if model_name == 'EASE' :
+        print('EASE 모델 훈련')
 
         ## 유저-문제 크롤링 세팅 ##
         print(f"유저 아이디 크롤링...")
@@ -93,6 +94,8 @@ def train_model(model_name : str , cfg : dict):
             pickle.dump(ease, file)
 
             os.symlink(model_path, model_link_path)
+    elif model_name == 'LIGHT_GCN' :
+        print('LIGHT_GCN 모델 훈련')
 
     print('훈련 완료')
 
