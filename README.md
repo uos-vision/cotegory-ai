@@ -44,7 +44,7 @@ cotegory ai 추천 서버
     "model" : "EASE"
 }
 ```
-
+<br>
 **/model** - 모델 다시 불러오기
 ```
 {
