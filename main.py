@@ -25,11 +25,13 @@ class Item(BaseModel):
     model : ModelEnum = ModelEnum.EASE
 
 @app.post(path = "/recommand", description="문제 추천")
-async def recommand(item : Item):
+async def recommand(item : Item) -> list:
+    # TODO : 에러 처리
     assert item.tag in cf.selected_tags, '리스트에 없는 태그입니다.'
-    print(item.model, list(ModelEnum))
     assert item.model in list(ModelEnum), '리스트에 없는 모델입니다.'
-    assert item.cnt < cf.num_problem, '반환 문제 개수가 전체 문제 개수를 초과합니다.'
+    assert item.cnt < cf.NUM_TOP_PROBLEMS, '반환 문제 개수가 top sampling 문제 개수를 초과합니다.'
+
+    print(item.model, list(ModelEnum))
 
     if item.handle is not None:
         # 아이디로 추천
@@ -61,7 +63,7 @@ class M_Item(BaseModel):
     model : ModelEnum = ModelEnum.EASE
 
 @app.post(path = "/model", description="추천 모델 다시 불러오기")
-def reload_model(item : M_Item):
+def reload_model(item : M_Item) -> str:
     assert item.model in list(ModelEnum), '리스트에 없는 모델입니다.'
 
     # 모델
