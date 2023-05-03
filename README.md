@@ -6,14 +6,18 @@ cotegory ai 추천 서버
 ## api 
 
 **/recommand** - 문제 추천
-- json
 ```
+# 입력 json
 {
     "handle": "string",
     "tag" : "string",
     "cnt" : int, 
     "model" : "string"
 }
+# 반환
+[
+  int, ...
+]
 ```
 - handle
   + 백준 아이디
@@ -37,6 +41,7 @@ cotegory ai 추천 서버
   + default : "EASE"
 
 - 예시
+# 입력 json
 ```
 {
     "handle": "sem1308",
@@ -44,14 +49,22 @@ cotegory ai 추천 서버
     "cnt" : 20, 
     "model" : "EASE"
 }
+# 반환
+[
+    2839, 1946, 1105, 10775, 2812, 1083, 1461, 2217, 1931, 2212,
+    1339, 1744, 1715, 16953, 1343, 2720, 1049, 11399, 1080, 2012
+]
 ```
 <br/>
 
 **/model** - 모델 다시 불러오기
 ```
+# 입력 json
 {
     "model" : "string"
 }
+# 반환
+string
 ```
 - model
   + 추천 모델 이름
@@ -60,9 +73,12 @@ cotegory ai 추천 서버
 
 - 예시
 ```
+# 입력 json
 {
     "model" : "EASE"
 }
+# 반환
+'모델 세팅 완료'
 ```
 
 ---
