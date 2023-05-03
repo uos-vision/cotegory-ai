@@ -91,7 +91,6 @@ string
 ```
 </details>
 
----
 ## requirements
 ```
 fastapi[all]
