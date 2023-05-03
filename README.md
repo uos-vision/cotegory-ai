@@ -4,9 +4,9 @@ cotegory ai 추천 서버
 ---
 ## api 
 
-/recommand - 문제 추천
+**/recommand** - 문제 추천
 - json
-  - ```
+```
 {
     "handle": "string",
     "tag" : "string",
@@ -29,6 +29,7 @@ cotegory ai 추천 서버
   + non essential
   + default : 20
 
+
 - model
   + 추천 모델 이름
   + non essential
@@ -44,7 +45,7 @@ cotegory ai 추천 서버
 }
 ```
 
-/model - 모델 다시 불러오기
+**/model** - 모델 다시 불러오기
 ```
 {
     "model" : "string"
