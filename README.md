@@ -5,8 +5,10 @@ cotegory ai 추천 서버
 ---
 ## api 
 
-**[post]/recommand** - 문제 추천
-+ 입력 json
+<details>
+<summary><b>[POST] /recommand</b> - 문제 추천</summary>
+
+#### < 입력 json >
 ```
 {
     "handle": "string",
@@ -15,9 +17,18 @@ cotegory ai 추천 서버
     "model" : "string"
 }
 ```
-&nbsp; &nbsp; <details>
++ 예시
+```
+{
+    "handle": "sem1308",
+    "tag" : "그리디 알고리즘",
+    "cnt" : 20, 
+    "model" : "EASE"
+}
+```
+<details>
 <summary>설명</summary>
-<br>
+    
 + handle
   - 백준 아이디
   - non essential
@@ -39,55 +50,46 @@ cotegory ai 추천 서버
   - default : "EASE"
 </details>
 
-+ 반환
+#### < 반환 >
 ```
 [
   int, ...
 ]
 ```
-
-- 예시
-+ 입력 json
-```
-{
-    "handle": "sem1308",
-    "tag" : "그리디 알고리즘",
-    "cnt" : 20, 
-    "model" : "EASE"
-}
-```
-+ 반환
++ 예시
 ```
 [
     2839, 1946, 1105, 10775, 2812, 1083, 1461, 2217, 1931, 2212,
     1339, 1744, 1715, 16953, 1343, 2720, 1049, 11399, 1080, 2012
 ]
 ```
-<br/>
+</details>
 
-**[post]/model** - 모델 다시 불러오기
+<details>
+<summary><b>[POST] /model</b> - 모델 다시 불러오기</summary>
+
+#### < 입력 json >
 ```
-# 입력 json
 {
     "model" : "string"
 }
-# 반환
-string
 ```
-- model
-  + 추천 모델 이름
-  + non essential
-  + default : "EASE"
-
-- 예시
++ 예시
 ```
-# 입력 json
 {
     "model" : "EASE"
 }
-# 반환
-'모델 세팅 완료'
 ```
+
+#### < 반환 >
+```
+string
+```
++ 예시
+```
+모델 추천 완료
+```
+</details>
 
 ---
 + requirements
