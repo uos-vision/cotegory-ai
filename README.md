@@ -20,10 +20,10 @@ cotegory ai 추천 서버
     "model" : "EASE"
 }
 - handle 
- + 백준 아이디
- + non essential
- + default : None
- + handle이 없으면 랜덤 추천
+ -- 백준 아이디
+ -- non essential
+ -- default : None
+ -- handle이 없으면 랜덤 추천
 
 - tag 
  + 문제 유형
