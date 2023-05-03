@@ -1,6 +1,7 @@
 # cotegory-ai
 cotegory ai 추천 서버
 
++ api 문서 : localhost:8000/docs
 ---
 ## api 
 
