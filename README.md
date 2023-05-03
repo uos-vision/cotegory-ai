@@ -14,7 +14,9 @@ cotegory ai 추천 서버
     "cnt" : int, 
     "model" : "string"
 }
-########
+```
+<details>
+<summary>설명</summary>
 handle
 - 백준 아이디
 - non essential
@@ -34,7 +36,7 @@ model
 - 추천 모델 이름
 - non essential
 - default : "EASE"
-```
+</details>
 
 + 반환
 ```
