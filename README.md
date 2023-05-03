@@ -8,10 +8,10 @@ cotegory ai 추천 서버
 - json
 ```
 {
-    "handle": string,
-    "tag" : string,
+    "handle": "string",
+    "tag" : "string",
     "cnt" : int, 
-    "model" : string
+    "model" : "string"
 }
 ```
 - handle
@@ -47,7 +47,7 @@ cotegory ai 추천 서버
 /model - 모델 다시 불러오기
 ```
 {
-    "model" : string
+    "model" : "string"
 }
 ```
 - model
