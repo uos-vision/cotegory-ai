@@ -6,33 +6,35 @@ cotegory ai 추천 서버
 ## api 
 
 **/recommand** - 문제 추천
++ 입력 json
 ```
-# 입력 json
 {
     "handle": "string",
     "tag" : "string",
     "cnt" : int, 
     "model" : "string"
 }
-# 반환
-[
-  int, ...
-]
 ```
-- handle
-  + 백준 아이디
-  + non essential
-  + default : None
-  + handle이 없으면 랜덤 추천
+  - handle
+    + 백준 아이디
+    + non essential
+    + default : None
+    + handle이 없으면 랜덤 추천
 
-- tag 
-  + 문제 유형
-  + essential
+  - tag 
+    + 문제 유형
+    + essential
  
 - cnt
   + 반환 문제 개수 
   + non essential
   + default : 20
+
+
++ 반환
+[
+  int, ...
+]
 
 
 - model
