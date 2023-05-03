@@ -16,5 +16,5 @@ __pycache__/*
 model/__pycache__/*
 
 # cotegory
-model/saved/e*
-dataset/*
+model/saved/ease/*
+dataset/saved/*

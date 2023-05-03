@@ -1,5 +1,6 @@
 import numpy as np
-class EASE:
+from .base_model import BaseModel
+class EASE(BaseModel):
     """
     Embarrassingly Shallow Autoencoders model class
     """
