@@ -6,24 +6,28 @@ cotegory ai 추천 서버
 
 /recommand
 - 문제 추천
+```
 {
     "handle": string,
     "tag" : string,
     "cnt" : int, 
     "model" : string
 }
+```
 - 예시
+```
 {
     "handle": "sem1308",
     "tag" : "그리디 알고리즘",
     "cnt" : 20, 
     "model" : "EASE"
 }
+```
 - handle 
- -- 백준 아이디
- -- non essential
- -- default : None
- -- handle이 없으면 랜덤 추천
+ + 백준 아이디
+ + non essential
+ + default : None
+ + handle이 없으면 랜덤 추천
 
 - tag 
  + 문제 유형
@@ -41,13 +45,17 @@ cotegory ai 추천 서버
 
 /model
 - 모델 다시 불러오기
+```
 {
     "model" : string
 }
+```
 - 예시
+```
 {
     "model" : "EASE"
 }
+```
 - model
  + 추천 모델 이름
  + non essential
