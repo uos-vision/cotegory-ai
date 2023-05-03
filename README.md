@@ -5,7 +5,7 @@ cotegory ai 추천 서버
 ---
 ## api 
 
-**/recommand** - 문제 추천
+**[post]/recommand** - 문제 추천
 + 입력 json
 ```
 {
@@ -14,36 +14,37 @@ cotegory ai 추천 서버
     "cnt" : int, 
     "model" : "string"
 }
-```
-  - handle
-    + 백준 아이디
-    + non essential
-    + default : None
-    + handle이 없으면 랜덤 추천
+########
+handle
+- 백준 아이디
+- non essential
+- default : None
+- handle이 없으면 랜덤 추천
 
-  - tag 
-    + 문제 유형
-    + essential
+tag 
+- 문제 유형
+- essential
  
-- cnt
-  + 반환 문제 개수 
-  + non essential
-  + default : 20
+cnt
+- 반환 문제 개수 
+- non essential
+- default : 20
 
+model
+- 추천 모델 이름
+- non essential
+- default : "EASE"
+```
 
 + 반환
+```
 [
   int, ...
 ]
-
-
-- model
-  + 추천 모델 이름
-  + non essential
-  + default : "EASE"
+```
 
 - 예시
-# 입력 json
++ 입력 json
 ```
 {
     "handle": "sem1308",
@@ -51,7 +52,9 @@ cotegory ai 추천 서버
     "cnt" : 20, 
     "model" : "EASE"
 }
-# 반환
+```
++ 반환
+```
 [
     2839, 1946, 1105, 10775, 2812, 1083, 1461, 2217, 1931, 2212,
     1339, 1744, 1715, 16953, 1343, 2720, 1049, 11399, 1080, 2012
@@ -59,7 +62,7 @@ cotegory ai 추천 서버
 ```
 <br/>
 
-**/model** - 모델 다시 불러오기
+**[post]/model** - 모델 다시 불러오기
 ```
 # 입력 json
 {
