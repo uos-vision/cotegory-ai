@@ -11,3 +11,4 @@ class StrEnum(str, Enum):
 
 class ModelEnum(StrEnum):
     EASE = auto()
+    AUTO_ENCODER = auto()

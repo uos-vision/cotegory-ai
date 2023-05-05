@@ -26,8 +26,12 @@ selected_tags = ['그리디 알고리즘', '다이나믹 프로그래밍', '브�
 # 모델 불러오기
 model_root_dir = './model/saved'
 models = {}
-for m in ModelEnum:
-    models[m] = model.get_model(m)
+model_srcs = {
+    ModelEnum.EASE : 'ease_model_1682656807.p',
+    ModelEnum.AUTO_ENCODER : 'auto_encoder_model.pt',
+}
+for m, src in model_srcs.items():
+    models[m] = model.get_model(m, src)
 print("모델 불러오기 완료")
 
 # 데이터 셋 불러오기 - 추천할 문제에 쓰임
