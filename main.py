@@ -20,8 +20,8 @@ app = FastAPI()
 
 ###### 태그 기반 추천 ######
 class Item(BaseModel):
-    handle: str = None
-    tag: str
+    handle : str = None
+    tag : str
     cnt : int = cf.NUM_TOP_PROBLEMS
     model : ModelEnum = ModelEnum.EASE
 
@@ -38,8 +38,8 @@ async def recommand(item : Item) -> list:
         user_problem = np.zeros([1, cf.num_problem])
         cr.add_to_user_problem_mat(0, item.handle, user_problem)
 
-        RecModel = cf.models[item.model]
-        result = RecModel.getUsersRating(user_problem)
+        rec_model : model.BaseModel = cf.models[item.model]
+        result = rec_model.getUsersRating(user_problem)
 
         # 유저가 푼 문제와 관련이 높은 문제 추천
         result[user_problem.nonzero()] = -np.inf
