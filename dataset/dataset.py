@@ -1,5 +1,6 @@
 import config as cf
 import pandas as pd
+import os
 
 def get_problems_by_category(tag_name, tag_problem_mat):
     selected_probs_by_tag = []
@@ -18,24 +19,16 @@ def set_tag_problem(tag_problem_mat):
 
     return selected_probs_by_tags,idx_to_num
 
-def get_dataset_dir_file():
-    dataset_dir = 'dataset/saved'
-    dataset_file_name = 'tag_problem_mat_all'
-    return dataset_dir, dataset_file_name
-
-def get_dataset():
+def get_dataset(dataset_dir, dataset_file_name):
     # 데이터 셋 불러오기
-    dataset_dir, dataset_file_name = get_dataset_dir_file()
+    dataset_path = cf.call_pre_path(dataset_dir, dataset_file_name)
 
-    try:
-        dataset_path = cf.call_pre_path(dataset_dir, dataset_file_name)
-        tag_problem_mat = pd.read_csv(dataset_path, index_col=0)
-    except:
+    if (dataset_path is None) or (not os.path.exists(dataset_path)):
         print("기본 데이터로 설정")
         dataset_src_file_name = 'tag_problem_mat_all.csv'
         dataset_path = cf.call_pre_path(dataset_dir, dataset_file_name, dataset_src_file_name)
-        tag_problem_mat = pd.read_csv(dataset_path, index_col=0)
 
+    tag_problem_mat = pd.read_csv(dataset_path, index_col=0)
     tag_problem_mat = tag_problem_mat.T[cf.selected_tags].T
 
     print("문제데이터셋 경로 : " + dataset_path)
@@ -44,3 +37,9 @@ def get_dataset():
     selected_probs_by_tags, idx_to_num = set_tag_problem(tag_problem_mat)
 
     return tag_problem_mat, selected_probs_by_tags, idx_to_num
+
+def get_num_problems(dataset_dir, data_file):
+    train_data_path = os.path.join(dataset_dir, data_file)
+    train_s_mat = pd.read_csv(train_data_path, index_col=0)
+    num_problem = train_s_mat.shape[1]  # 1000 ~ 27981 -> 26982
+    return num_problem

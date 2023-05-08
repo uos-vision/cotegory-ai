@@ -5,21 +5,18 @@ import numpy as np
 
 class AutoEncoder(BaseModel):
 
-    def __init__(self, sparse_matrix, cfg):
+    def __init__(self, item_n, K, device):
         """
         Arguments
-        - sparse_matrix : user-item rating matrix
-        - cfg : configuration dict
-            - K (int)       : number of latent dimensions
-            - device : using device
+        - item_n : number of item dimensions
+        - K (int): number of latent dimensions
+        - device : using device
         """
         super(AutoEncoder, self).__init__()
         # convert ndArray
-        self.sparse_matrix = torch.tensor(sparse_matrix.fillna(0).to_numpy()).cuda()
-        self.user_n, self.item_n = sparse_matrix.shape
-        del self.sparse_matrix
-        self.K = cfg["K"]
-        self.device = cfg["device"]
+        self.item_n = item_n
+        self.K = K
+        self.device = device
 
         # Initialize user and item latent feature matrice
         self.I_1 = nn.Linear(self.item_n, self.K, bias=True, device=self.device)

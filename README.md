@@ -35,19 +35,19 @@ cotegory ai 추천 서버
   - default : None
   - handle이 없으면 랜덤 추천
 
-+ tag 
-  - 문제 유형
-  - essential
+  + tag 
+    - 문제 유형
+    - essential
  
-+ cnt
-  - 반환 문제 개수 
-  - non essential
-  - default : 20
+  + cnt
+    - 반환 문제 개수 
+    - non essential
+    - default : 20
 
-+ model
-  - 추천 모델 이름
-  - non essential
-  - default : "EASE"
+  + model
+    - 추천 모델 이름
+    - non essential
+    - default : "EASE"
 </details>
 
 #### < 반환 >
@@ -94,17 +94,53 @@ string
 <br>
     
 ## requirements
-```
-fastapi[all]
-bottleneck
-pandas
-beautifulsoup4
-requests
-numpy
-tqdm
-```
++ SOFTWARE
+  ```commandline
+  pip install -r requirements.txt
+  ```
+  ```
+  fastapi[all]
+  bottleneck
+  pandas
+  beautifulsoup4
+  requests
+  numpy
+  tqdm
+  chardet
+  ```
+  + python 3.10
+  + torch 2.0, cuda 11.x (11.7)
+    + pip
+    ```
+    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117
+    ```
+    + conda
+    ```
+    conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
+    ```
++ HARDWARE
+  + GPU
+    + 1GB 이상
++ REQUIRED FILES
+  + model/saved
+    + ease
+      + ease_model.p
+    + auto_encoder
+      + auto_encoder_model.pt
+    > 서버 실행시 모델 파일을 가리키는 심볼릭 링크 파일(.symlink) 자동 생성
+  + dataset/saved
+    + tag_problem_mat_all.csv
+      + 태그별 문제 매트릭스
+      + 추천할 문제는 이 매트릭스에서 선정
+      + 아래 카테고리가 전부 포함되어야함
+    + train_user_problem_mat.csv
+      + 훈련한 유저별 문제 매트릭스
+      + 문제 개수 얻는 용도
+## **Recommand Models**
++ EASE
++ AUTO_ENCODER
 
-## categories
+## **categories**
 ```
 그리디 알고리즘
 다이나믹 프로그래밍

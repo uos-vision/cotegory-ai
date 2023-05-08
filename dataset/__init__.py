@@ -1,1 +1,1 @@
-from .dataset import get_dataset
+from .dataset import get_dataset, get_num_problems

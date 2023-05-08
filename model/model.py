@@ -4,7 +4,7 @@ from .ease import EASE
 from .auto_encoder import AutoEncoder
 import config as cf
 import torch
-import pandas as pd
+import os
 
 class MyCoustomUnpickler(pickle.Unpickler):
     def find_class(self, __module_name: str, __global_name: str):
@@ -13,16 +13,19 @@ class MyCoustomUnpickler(pickle.Unpickler):
         return super().find_class(__module_name, __global_name)
 
 def get_model_dir_file(model_name):
-    model_dir = f'{cf.model_root_dir}/{model_name.lower()}'
+    # 경로는 유동적으로 변경해서 사용
+    # 모델 파일 이름은 모델 이름을 소문자로 변경한 뒤 뒤에 _model을 붙인 파일로 고정
+    # ex) EASE => ease_model
+    model_dir = os.path.join(cf.model_root_dir, model_name.lower())
     model_file_name = f'{model_name.lower()}_model'
     return model_dir, model_file_name
 
 def get_model(model_name, model_src_file_name):
     # 모델 불러오기
     model_dir, model_file_name = get_model_dir_file(model_name)
-    try:
-        model_path = cf.call_pre_path(model_dir, model_file_name)
-    except:
+    model_path = cf.call_pre_path(model_dir, model_file_name)
+
+    if (model_path is None) or (not os.path.exists(model_path)):
         print(f"{model_name} - 기본 모델로 설정")
         model_path = cf.call_pre_path(model_dir, model_file_name, model_src_file_name)
 
@@ -34,15 +37,7 @@ def get_model(model_name, model_src_file_name):
             model = model.load()
     elif model_name == ModelEnum.AUTO_ENCODER:
         # 모델 불러오기
-        cfg = {
-            "data_dir" : "./dataset/saved",
-            "data_file" : "user_problem_mat.csv",
-            "K" : 1024,
-            "device" : "cuda"
-        }
-        train_data_path = f'{cfg["data_dir"]}/train_{cfg["data_file"]}'
-        train_s_mat = pd.read_csv(train_data_path, index_col=0)
-        model = AutoEncoder(train_s_mat, cfg)
+        model = AutoEncoder(cf.num_problem, K=1024, device="cuda")
         model.load_state_dict(torch.load(model_path))
         model.eval()
 
