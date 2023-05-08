@@ -1,4 +1,14 @@
 import os
+from enum import Enum
+class StrEnum(str, Enum):
+    def _generate_next_value_(name, start, count, last_values):
+        return name
+
+    def __repr__(self):
+        return self.name
+
+    def __str__(self):
+        return self.name
 def call_pre_path(dir,file_name, src = None):
     link_path = os.path.join(dir,file_name)
 

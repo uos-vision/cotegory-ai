@@ -1,5 +1,6 @@
 import utils
 import pandas as pd
+import config as cf
 import os
 
 def get_problems_by_category(tag_name, tag_problem_mat):
@@ -25,8 +26,7 @@ def get_dataset(dataset_dir, dataset_file_name, selected_tags):
 
     if (dataset_path is None) or (not os.path.exists(dataset_path)):
         print("기본 데이터로 설정")
-        dataset_src_file_name = 'tag_problem_mat_all.csv'
-        dataset_path = utils.call_pre_path(dataset_dir, dataset_file_name, dataset_src_file_name)
+        dataset_path = utils.call_pre_path(dataset_dir, dataset_file_name, cf.dataset_src_file_name)
 
     tag_problem_mat = pd.read_csv(dataset_path, index_col=0)
     tag_problem_mat = tag_problem_mat.T[selected_tags].T
