@@ -32,4 +32,4 @@ class AutoEncoder(BaseModel):
         return rating
 
     def getUsersRating(self, user_row: np.array):
-        return self.forward(torch.Tensor(user_row).cuda()).cpu().detach().numpy()
+        return self.forward(torch.Tensor(user_row).to(self.device)).cpu().detach().numpy()

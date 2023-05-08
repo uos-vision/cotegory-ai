@@ -31,8 +31,6 @@ async def recommand(item : Item) -> list:
     if item.cnt > cf.NUM_TOP_PROBLEMS : raise exc.NotInBoundException('반환 문제 개수가 top sampling 문제 개수를 초과합니다.')
     if item.cnt < 1 : raise exc.NotInBoundException('반환 문제 개수가 1개 이상이어야합니다.')
 
-    print(item.model, list(ModelEnum))
-
     if item.handle is not None:
         # 아이디로 추천
         user_problem = np.zeros([1, cf.num_problem])
@@ -54,23 +52,30 @@ async def recommand(item : Item) -> list:
     rand_idx = random.sample(range(len(problems)),item.cnt)
     recommand_num = problems[rand_idx].tolist()
 
+    print(f"{item.model}로 추천")
+    print(f"추천 번호 : {recommand_num}")
+
     return recommand_num
 
-###### 추천 모델 다시 불러오기 ######
+###### 추천 모델 및 데이터 다시 불러오기 ######
 class M_Item(BaseModel):
     model : ModelEnum = ModelEnum.EASE
 
-@app.post(path = "/model", description="추천 모델 다시 불러오기")
-def reload_model(item : M_Item) -> str:
+@app.post(path = "/reload/model", description="추천 모델 다시 불러오기")
+async def reload_model(item : M_Item) -> str:
     if item.model not in list(ModelEnum) : exc.NotExistInListException('리스트에 없는 모델입니다.')
-
     # 모델
-    cf.models[item.model] = model.get_model(item.model)
-
-    # 데이터
-    cf.tag_problem_mat, cf.selected_probs_by_tags, cf.idx_to_num = dataset.get_dataset()
+    cf.models[item.model] = model.get_model(item.model, cf.model_srcs[item.model])
 
     return '모델 세팅 완료'
 
+@app.post(path = "/reload/data", description="태그-문제 데이터 다시 불러오기")
+async def reload_data()-> str:
+    # 데이터
+    cf.tag_problem_mat, cf.selected_probs_by_tags, cf.idx_to_num = dataset.get_dataset(cf.dataset_dir, cf.dataset_file_name, cf.selected_tags)
+
+    return '데이터 세팅 완료'
+    
+
 if __name__ == "__main__" :
-    uvicorn.run("main:app", port=8000, reload=True)
+    uvicorn.run("main:app", port=8000, reload=False)

@@ -66,7 +66,7 @@ cotegory ai 추천 서버
 </details>
 
 <details>
-<summary><b>[POST] /model</b> - 모델 다시 불러오기</summary>
+<summary><b>[POST] /reload/model</b> - 모델 다시 불러오기</summary>
 
 #### < 입력 json >
 ```
@@ -87,7 +87,21 @@ string
 ```
 + 예시
 ```
-모델 추천 완료
+모델 로드 완료
+```
+</details>
+
+<details>
+<summary><b>[POST] /reload/data</b> - 데이터 다시 불러오기</summary>
+
+#### < 입력 json >
+#### < 반환 >
+```
+string
+```
++ 예시
+```
+데이터 로드 완료
 ```
 </details>
 
@@ -136,6 +150,8 @@ string
     + train_user_problem_mat.csv
       + 훈련한 유저별 문제 매트릭스
       + 문제 개수 얻는 용도
+  + **tag_problem_mat_all.csv만 있어도 실행가능**
+    + 훈련된 모델이 아니므로 이상한 문제를 추천함
 + 관리자로 실행해야함
 
 ## **Recommand Models**

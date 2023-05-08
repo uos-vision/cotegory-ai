@@ -40,6 +40,11 @@ def get_dataset(dataset_dir, dataset_file_name, selected_tags):
 
 def get_num_problems(dataset_dir, data_file):
     train_data_path = os.path.join(dataset_dir, data_file)
-    train_s_mat = pd.read_csv(train_data_path, index_col=0)
-    num_problem = train_s_mat.shape[1]  # 1000 ~ 27981 -> 26982
+    try:
+        train_s_mat = pd.read_csv(train_data_path, index_col=0)
+        num_problem = train_s_mat.shape[1]  # 1000 ~ 27981 -> 26982
+    except:
+        print("훈련 데이터 불러오기 실패 - 초기 문제 개수로 설정")
+        num_problem = 26982
+    print(f"가장 큰 문제 번호 : {999+num_problem}")
     return num_problem

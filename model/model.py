@@ -27,19 +27,30 @@ def get_model(model_name, model_src_file_name):
     model_path = utils.call_pre_path(model_dir, model_file_name)
 
     if (model_path is None) or (not os.path.exists(model_path)):
-        print(f"{model_name} - 기본 모델로 설정")
+        print(f"{model_name} - 기본 모델 경로로 설정")
         model_path = utils.call_pre_path(model_dir, model_file_name, model_src_file_name)
 
     print(f"{model_name} 모델 경로 : " + model_path)
 
-    if model_name == ModelEnum.EASE:
-        with open(model_path, 'rb') as file:
-            model = MyCoustomUnpickler(file)
-            model = model.load()
-    elif model_name == ModelEnum.AUTO_ENCODER:
-        # 모델 불러오기
-        model = AutoEncoder(cf.num_problem, K=1024, device="cuda")
-        model.load_state_dict(torch.load(model_path))
-        model.eval()
-
+    try:
+        if model_name == ModelEnum.EASE:
+            model = EASE(300, cf.num_problem)
+            with open(model_path, 'rb') as file:
+                model = MyCoustomUnpickler(file)
+                model = model.load()
+        elif model_name == ModelEnum.AUTO_ENCODER:
+            # 모델 불러오기
+            device = (
+                "cuda" if torch.cuda.is_available()
+                else "cpu"
+            )
+            print(f"{model_name} - device : {device}")
+            model = AutoEncoder(cf.num_problem, K=1024, device=device)
+            model.load_state_dict(torch.load(model_path))
+            model.eval()
+    except:
+        print_load_err(model_name)
     return model
+
+def print_load_err(model_name):
+    print(f"{model_name} : 가중치 로드 실패 - 초기 가중치로 설정")
