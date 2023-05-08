@@ -1,5 +1,3 @@
-import pandas as pd
-import os
 import model
 from model import ModelEnum
 import dataset
@@ -8,22 +6,6 @@ import dataset
 ############# CONFIGS ##############
 ####################################
 
-def call_pre_path(dir,file_name, src = None):
-    link_path = os.path.join(dir,file_name)
-
-    if src is not None:
-        if os.path.islink(link_path):
-            os.unlink(link_path)
-        path = os.path.join(dir,src)
-        os.symlink(path, link_path)
-
-    try:
-        ret_path = os.readlink(link_path)
-    except:
-        ret_path = None
-
-    return ret_path
-
 # 태그 설정
 selected_tags = ['그리디 알고리즘', '다이나믹 프로그래밍', '브루트포스 알고리즘', '이분 탐색',
                  '너비 우선 탐색', '깊이 우선 탐색', '데이크스트라', '플로이드–워셜', '비트마스킹', '분리 집합']
@@ -31,7 +13,7 @@ selected_tags = ['그리디 알고리즘', '다이나믹 프로그래밍', '브�
 # 데이터 셋 불러오기 - 추천할 문제에 쓰임
 dataset_dir = './dataset/saved'
 dataset_file_name = 'tag_problem_mat_all'
-tag_problem_mat, selected_probs_by_tags,idx_to_num = dataset.get_dataset(dataset_dir, dataset_file_name)
+tag_problem_mat, selected_probs_by_tags,idx_to_num = dataset.get_dataset(dataset_dir, dataset_file_name, selected_tags)
 # tag_problem_mat.shape : (10, 26188)
 
 # 훈련한 문제 개수 설정

@@ -3,6 +3,7 @@ from . import ModelEnum
 from .ease import EASE
 from .auto_encoder import AutoEncoder
 import config as cf
+import utils
 import torch
 import os
 
@@ -23,11 +24,11 @@ def get_model_dir_file(model_name):
 def get_model(model_name, model_src_file_name):
     # 모델 불러오기
     model_dir, model_file_name = get_model_dir_file(model_name)
-    model_path = cf.call_pre_path(model_dir, model_file_name)
+    model_path = utils.call_pre_path(model_dir, model_file_name)
 
     if (model_path is None) or (not os.path.exists(model_path)):
         print(f"{model_name} - 기본 모델로 설정")
-        model_path = cf.call_pre_path(model_dir, model_file_name, model_src_file_name)
+        model_path = utils.call_pre_path(model_dir, model_file_name, model_src_file_name)
 
     print(f"{model_name} 모델 경로 : " + model_path)
 

@@ -136,6 +136,8 @@ string
     + train_user_problem_mat.csv
       + 훈련한 유저별 문제 매트릭스
       + 문제 개수 얻는 용도
++ 관리자로 실행해야함
+
 ## **Recommand Models**
 + EASE
 + AUTO_ENCODER
