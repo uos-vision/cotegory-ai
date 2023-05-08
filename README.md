@@ -134,7 +134,9 @@ string
     ```
 + HARDWARE
   + GPU
-    + 1GB 이상
+    + 최소 1GB 이상
+    + 권장 2GB 이상
+    + 없어도 무관 단, cpu 성능이 좋아야함
 + REQUIRED FILES
   + model/saved
     + ease
