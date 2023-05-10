@@ -17,4 +17,4 @@ model/__pycache__/*
 
 # cotegory
 model/saved/*
-dataset/saved/*
+dataset/saved/train_user_problem_mat.csv
