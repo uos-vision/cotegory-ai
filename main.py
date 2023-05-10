@@ -77,7 +77,6 @@ async def reload_data()-> str:
     cf.tag_problem_mat, cf.selected_probs_by_tags, cf.idx_to_num = dataset.get_dataset(cf.dataset_dir, cf.dataset_file_name, cf.selected_tags)
 
     return '데이터 세팅 완료'
-    
 
-# if __name__ == "__main__" :
-#     uvicorn.run("main:app", port=8000, reload=False)
+if __name__ == "__main__" :
+    uvicorn.run("main:app", port=8000, reload=True)

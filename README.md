@@ -2,7 +2,10 @@
 cotegory ai 추천 서버
 
 + api 문서 : localhost:8000/docs
-
++ server 실행 명령어
+  ```commandline
+  uvicorn main:app --reload --host=0.0.0.0 --port=8000
+  ```
 ## api 
 
 <details>
