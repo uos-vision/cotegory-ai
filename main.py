@@ -9,10 +9,12 @@ import dataset
 import model
 import random
 from model import ModelEnum
-import exception as exc
-# uvicorn main:app --reload
 
 app = FastAPI()
+
+import exception as exc
+
+# uvicorn main:app --reload --host=0.0.0.0 --port=8000
 
 #####################################
 ################ API ################
@@ -27,9 +29,9 @@ class Item(BaseModel):
 
 @app.post(path = "/recommand", description="문제 추천")
 async def recommand(item : Item) -> list:
-    if item.tag not in cf.selected_tags : raise exc.NotExistInListException('리스트에 없는 태그입니다.')
-    if item.cnt > cf.NUM_TOP_PROBLEMS : raise exc.NotInBoundException('반환 문제 개수가 top sampling 문제 개수를 초과합니다.')
-    if item.cnt < 1 : raise exc.NotInBoundException('반환 문제 개수가 1개 이상이어야합니다.')
+    if item.tag not in cf.selected_tags : raise NotExistInListException('리스트에 없는 태그입니다.')
+    if item.cnt > cf.NUM_TOP_PROBLEMS : raise NotInBoundException('반환 문제 개수가 top sampling 문제 개수를 초과합니다.')
+    if item.cnt < 1 : raise NotInBoundException('반환 문제 개수가 1개 이상이어야합니다.')
 
     if item.handle is not None:
         # 아이디로 추천
@@ -63,7 +65,7 @@ class M_Item(BaseModel):
 
 @app.post(path = "/reload/model", description="추천 모델 다시 불러오기")
 async def reload_model(item : M_Item) -> str:
-    if item.model not in list(ModelEnum) : exc.NotExistInListException('리스트에 없는 모델입니다.')
+    if item.model not in list(ModelEnum) : NotExistInListException('리스트에 없는 모델입니다.')
     # 모델
     cf.models[item.model] = model.get_model(item.model, cf.model_srcs[item.model])
 
@@ -77,5 +79,5 @@ async def reload_data()-> str:
     return '데이터 세팅 완료'
     
 
-if __name__ == "__main__" :
-    uvicorn.run("main:app", port=8000, reload=False)
+# if __name__ == "__main__" :
+#     uvicorn.run("main:app", port=8000, reload=False)
