@@ -15,6 +15,7 @@ app = FastAPI()
 import exception as exc
 
 # uvicorn main:app --reload --host=0.0.0.0 --port=8000
+# uvicorn main:app --host=0.0.0.0 --port=8000
 
 #####################################
 ################ API ################

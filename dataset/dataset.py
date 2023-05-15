@@ -32,13 +32,14 @@ def get_dataset(dataset_dir, dataset_file_name, selected_tags):
 
     exp = dataset_path.split(sep='.')[-1]
     if exp == "csv":
-        tag_problem_mat = pd.read_csv(dataset_path, index_col=0).T
+        tag_problem_mat = pd.read_csv(dataset_path, index_col=0)
     elif exp == "npz":
         tp_mat = sparse.load_npz(dataset_path).toarray()
         tag_list_all = np.load(f'{dataset_dir}/tag_list_all.npy', allow_pickle=True)
-        tag_problem_mat = pd.DataFrame({tag:mat for (tag,mat) in zip(tag_list_all,tp_mat)})
+        prob_num_list_all = np.load(f'{dataset_dir}/prob_num_list_all.npy', allow_pickle=True)
+        tag_problem_mat = pd.DataFrame(tp_mat,index = tag_list_all, columns=prob_num_list_all)
 
-    tag_problem_mat = tag_problem_mat[selected_tags].T
+    tag_problem_mat = tag_problem_mat.T[selected_tags].T
     print("문제데이터셋 경로 : " + dataset_path)
     print(f"태그-문제 매트릭 shape : {tag_problem_mat.shape}")
 
@@ -49,12 +50,13 @@ def get_dataset(dataset_dir, dataset_file_name, selected_tags):
 
 def get_num_problems(dataset_dir, data_file):
     data_path = os.path.join(dataset_dir, data_file)
+    print(data_path)
     try:
         exp = data_path.split(sep='.')[-1]
         if exp == "csv":
             s_mat = pd.read_csv(data_path, index_col=0)
         elif exp == "npz":
-            s_mat = sparse.load_npz(data_path).toarray()
+            s_mat = sparse.load_npz(data_path).astype(np.float32).toarray()
         num_problem = s_mat.shape[1]  # 1000 ~ 27981 -> 26982
     except:
         print("훈련 데이터 불러오기 실패 - 초기 문제 개수로 설정")
