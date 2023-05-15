@@ -4,7 +4,12 @@ cotegory ai 추천 서버
 + api 문서 : localhost:8000/docs
 + server 실행 명령어
   ```commandline
+  # window 
+  (관리자로 실행후)
   uvicorn main:app --reload --host=0.0.0.0 --port=8000
+  
+  # Linux
+  sudo uvicorn main:app --reload --host=0.0.0.0 --port=8000
   ```
 ## api 
 
@@ -111,58 +116,90 @@ string
 <br>
     
 ## requirements
-+ SOFTWARE
-  ```commandline
-  pip install -r requirements.txt
-  ```
-  ```
-  fastapi[all]
-  bottleneck
-  pandas
-  beautifulsoup4
-  requests
-  numpy
-  tqdm
-  chardet
-  scipy
-  ```
-  + python 3.10
-  + torch 2.0, cuda 11.x (11.7)
+###### SOFTWARE
+```commandline
+pip install -r requirements.txt
+```
+```
+fastapi[all]
+bottleneck
+pandas
+beautifulsoup4
+requests
+numpy
+tqdm
+chardet
+scipy
+```
++ python 3.10
++ torch 2.0, cuda 11.x (11.7)
     + pip
-    ```
-    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117
-    ```
-    + conda
-    ```
-    conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
-    ```
-+ HARDWARE
-  + GPU
-    + 최소 1GB 이상
-    + 권장 2GB 이상
-    + 없어도 무관 단, cpu 성능이 좋아야함
-+ REQUIRED FILES
-  + model/saved
-    + ease
-      + ease_model.p
-    + auto_encoder
-      + auto_encoder_model.pt
-    > 서버 실행시 모델 파일을 가리키는 심볼릭 링크 파일(.symlink) 자동 생성
-  + dataset/saved
-    + tag_problem_mat_all.csv
-      + 태그별 문제 매트릭스
-      + 추천할 문제는 이 매트릭스에서 선정
-      + 아래 카테고리가 전부 포함되어야함
-    + train_user_problem_mat.csv
-      + 훈련한 유저별 문제 매트릭스
-      + 문제 개수 얻는 용도
-  + **tag_problem_mat_all.csv만 있어도 실행가능**
-    + 훈련된 모델이 아니므로 이상한 문제를 추천함
-+ 관리자로 실행해야함
+  ```
+  pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117
+  ```
+  + conda
+  ```
+  conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
+  ```
+###### HARDWARE
++ GPU
+  + 최소 1GB 이상
+  + 권장 2GB 이상
+  + 없어도 무관 단, cpu 성능이 좋아야함 
+###### REQUIRED FILES
+```commandline
+필요한 파일 구조
+│ 
+├─dataset
+│  └─saved
+│        tag_problem_mat_all.csv
+│           - 태그별 문제 매트릭스
+│           - 추천할 문제는 이 매트릭스에서 선정
+│           - 아래 카테고리가 전부 포함되어야함
+│        tag_problem_mat_all.npz
+│           - 태그별 문제 매트릭스 (row, culumn에 이름이 명시되어있지 않음)
+│           - prob_num_list_all.npy, tag_list_all.npy파일 필요
+│        prob_num_list_all.npy
+│           - 전체 문제 번호 리스트
+│           - 태그별 문제 매트릭스의 column 이름
+│        tag_list_all.npy) 
+│           - 전체 태그 리스트
+│           - 태그별 문제 매트릭스의 row 이름
+│        user_problem_mat.npz
+│           - 훈련에 쓰인 유저-문제 매트릭스
+│           - 훈련에 쓰인 문제 개수 불러오는 데에 쓰임
+│
+└─model
+   └─saved
+     ├─auto_encoder
+     │      auto_encoder_model.pt
+     │         - AUTO_ENCODER 모델 가중치 파일
+     │      
+     └─ease
+            ease_model.npz
+     │         - EASE 모델 가중치 파일
+            
+- 서버 실행시 모델 파일을 가리키는 심볼릭 링크 파일(.symlink) 자동 생성
+- 모델 가중치 파일 없어도 실행 가능 (단, tag_problem_mat_all 파일 필요)
+  └─ 훈련된 모델이 아니므로 이상한 문제를 추천함
+```
 
 ## **Recommand Models**
-+ EASE
-+ AUTO_ENCODER
++ k=10
+
+| Model              | Precision@10  | Recall@10  | nDCG@10    |
+|--------------------|:--------------|:-----------|:-----------|
+| EASE               | 0.9614        | 0.1255     | 0.9691     |
+| AUTO_ENCODER       | 0.9595        | 0.1252     | 0.9670     | 
+| AUTO_ENCODER_CONST | **0.9647**    | **0.1259** | **0.9712** |
+
++ k=20
+
+| Model              | Precision@20  | Recall@20  | nDCG@20    | 
+|--------------------|:--------------|:-----------|:-----------|
+| EASE               | 0.9259        | 0.2404     | 0.9418     | 
+| AUTO_ENCODER       | 0.9259        | 0.2403     | 0.9410     | 
+| AUTO_ENCODER_CONST | **0.9292**    | **0.2413** | **0.9443** | 
 
 ## **categories**
 ```
