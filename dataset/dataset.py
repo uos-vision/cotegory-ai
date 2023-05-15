@@ -32,14 +32,15 @@ def get_dataset(dataset_dir, dataset_file_name, selected_tags):
 
     exp = dataset_path.split(sep='.')[-1]
     if exp == "csv":
-        tag_problem_mat = pd.read_csv(dataset_path, index_col=0)
+        tag_problem_mat = pd.read_csv(dataset_path, index_col=0).T
     elif exp == "npz":
-        tag_problem_mat = sparse.load_npz(dataset_path).toarray()
+        tp_mat = sparse.load_npz(dataset_path).toarray()
         tag_list_all = np.load(f'{dataset_dir}/tag_list_all.npy', allow_pickle=True)
-        selected_tags = list(filter(lambda x: tag_list_all[x] in selected_tags, range(len(tag_list_all))))
-    tag_problem_mat = tag_problem_mat.T[selected_tags].T
+        tag_problem_mat = pd.DataFrame({tag:mat for (tag,mat) in zip(tag_list_all,tp_mat)})
 
+    tag_problem_mat = tag_problem_mat[selected_tags].T
     print("문제데이터셋 경로 : " + dataset_path)
+    print(f"태그-문제 매트릭 shape : {tag_problem_mat.shape}")
 
     # 태그별 문제 저장
     selected_probs_by_tags, idx_to_num = set_tag_problem(tag_problem_mat, selected_tags)
@@ -50,9 +51,9 @@ def get_num_problems(dataset_dir, data_file):
     data_path = os.path.join(dataset_dir, data_file)
     try:
         exp = data_path.split(sep='.')[-1]
-        if exp is "csv":
+        if exp == "csv":
             s_mat = pd.read_csv(data_path, index_col=0)
-        elif exp is "npz":
+        elif exp == "npz":
             s_mat = sparse.load_npz(data_path).toarray()
         num_problem = s_mat.shape[1]  # 1000 ~ 27981 -> 26982
     except:

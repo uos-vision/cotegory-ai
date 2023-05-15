@@ -18,7 +18,7 @@ tag_problem_mat, selected_probs_by_tags,idx_to_num = dataset.get_dataset(dataset
 # tag_problem_mat.shape : (10, 26188)
 
 # 훈련한 문제 개수 설정
-data_file = "train_user_problem_mat.npz"
+data_file = "user_problem_mat.npz"
 num_problem = dataset.get_num_problems(dataset_dir,data_file)
 
 # 모델 불러오기
