@@ -6,3 +6,4 @@ requests
 numpy
 tqdm
 chardet
+scipy

@@ -5,6 +5,7 @@ from .auto_encoder import AutoEncoder
 import config as cf
 import utils
 import torch
+from scipy import sparse
 import os
 
 class MyCoustomUnpickler(pickle.Unpickler):
@@ -35,9 +36,7 @@ def get_model(model_name, model_src_file_name):
     try:
         if model_name == ModelEnum.EASE:
             model = EASE(300, cf.num_problem)
-            with open(model_path, 'rb') as file:
-                model = MyCoustomUnpickler(file)
-                model = model.load()
+            model.B = sparse.load_npz(model_path).toarray()
         elif model_name == ModelEnum.AUTO_ENCODER:
             # 모델 불러오기
             device = (

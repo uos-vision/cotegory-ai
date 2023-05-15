@@ -124,6 +124,7 @@ string
   numpy
   tqdm
   chardet
+  scipy
   ```
   + python 3.10
   + torch 2.0, cuda 11.x (11.7)
