@@ -50,7 +50,6 @@ def get_dataset(dataset_dir, dataset_file_name, selected_tags):
 
 def get_num_problems(dataset_dir, data_file):
     data_path = os.path.join(dataset_dir, data_file)
-    print(data_path)
     try:
         exp = data_path.split(sep='.')[-1]
         if exp == "csv":
