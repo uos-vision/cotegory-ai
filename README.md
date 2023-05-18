@@ -122,25 +122,34 @@ pip install -r requirements.txt
 ```
 ```
 fastapi[all]
-bottleneck
-pandas
-beautifulsoup4
-requests
-numpy
-tqdm
-chardet
-scipy
+bottleneck==1.3.7
+pandas==1.5.3
+beautifulsoup4==4.11.2
+requests==2.28.2
+numpy==1.24.2
+chardet==5.1.0
+scipy==1.10.1
 ```
 + python 3.10
-+ torch 2.0, cuda 11.x (11.7)
-    + pip
-  ```
-  pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117
-  ```
-  + conda
-  ```
-  conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
-  ```
++ torch 2.0
+  + cpu
+      + pip
+    ```
+    pip3 install torch torchvision torchaudio
+    ```
+    + conda
+    ```
+    conda install pytorch torchvision torchaudio cpuonly -c pytorch
+    ```
+  + gpu - cuda 11.x (11.7)
+      + pip
+    ```
+    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117
+    ```
+    + conda
+    ```
+    conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
+    ```
 ###### HARDWARE
 + GPU
   + 최소 1GB 이상
