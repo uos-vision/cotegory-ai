@@ -35,8 +35,9 @@ def get_model(model_name, model_src_file_name):
 
     try:
         if model_name == ModelEnum.EASE:
-            model = EASE(300, cf.num_problem)
-            model.B = sparse.load_npz(model_path).toarray()
+            rec_model = EASE(300, cf.num_problem)
+            rec_model.B = sparse.load_npz(model_path).toarray()
+            rec_model.nz = rec_model.B.sum(0).nonzero()[0]
         elif model_name == ModelEnum.AUTO_ENCODER:
             # 모델 불러오기
             device = (
@@ -44,12 +45,12 @@ def get_model(model_name, model_src_file_name):
                 else "cpu"
             )
             print(f"{model_name} - device : {device}")
-            model = AutoEncoder(cf.num_problem, K=1024, device=device)
-            model.load_state_dict(torch.load(model_path))
-            model.eval()
+            rec_model = AutoEncoder(cf.num_problem, K=1024, device=device)
+            rec_model.load_state_dict(torch.load(model_path))
+            rec_model.eval()
     except:
         print_load_err(model_name)
-    return model
+    return rec_model
 
 def print_load_err(model_name):
     print(f"{model_name} : 가중치 로드 실패 - 초기 가중치로 설정")
