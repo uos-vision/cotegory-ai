@@ -25,6 +25,6 @@ jobs:
 
       - name: Update code and build
         run: |
-          cd cotegory-ai
+          cd /home/ubuntu/cotegory-ai
           git pull
           docker-compose up -d --build
