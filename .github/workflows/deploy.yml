@@ -19,6 +19,10 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      
+      - name: Set directory permissions
+        run: |
+          chmod +rx /home/ubuntu/cotegory-ai
 
       - name: Connect to EC2 instance
         run: ssh -o StrictHostKeyChecking=no -A ${{ secrets.SSH_USER }}@${{ secrets.EC2_PUBLIC_IP }}
