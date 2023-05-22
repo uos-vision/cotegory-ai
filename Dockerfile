@@ -16,13 +16,13 @@ RUN pip3 install torch torchvision torchaudio --requirement installed_packages.t
 
 RUN apt-get update && apt-get install -y curl
 
-RUN mkdir -p model/saved/auto-encoder
-
-RUN if [ ! -f "model/saved/auto-encoder/auto_encoder_model.pt" ]; then \
+RUN mkdir -p model/saved/auto-encoder \
+    && if [ ! -f "model/saved/auto-encoder/auto_encoder_model.pt" ]; then \
         curl -o model/saved/auto-encoder/auto_encoder_model.pt "https://drive.google.com/uc?export=download&id=${AUTO_ENCODER_MODEL_ID}"; \
     fi
 
-RUN if [ ! -f "model/saved/ease/ease_model.npz" ]; then \
+RUN mkdir -p model/saved/ease \
+    && if [ ! -f "model/saved/ease/ease_model.npz" ]; then \
         curl -o model/saved/ease/ease_model.npz "https://drive.google.com/uc?export=download&id=${EASE_MODEL_ID}"; \
     fi
 
