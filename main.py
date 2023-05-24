@@ -28,8 +28,8 @@ class Item(BaseModel):
     cnt : int = cf.NUM_TOP_PROBLEMS
     model : ModelEnum = ModelEnum.EASE
 
-@app.post(path = "/recommand", description="문제 추천")
-async def recommand(item : Item) -> list:
+@app.post(path = "/recommend", description="문제 추천")
+async def recommend(item : Item) -> list:
     if item.tag not in cf.selected_tags : raise exc.NotExistInListException('리스트에 없는 태그입니다.')
     if item.cnt > cf.NUM_TOP_PROBLEMS : raise exc.NotInBoundException('반환 문제 개수가 top sampling 문제 개수를 초과합니다.')
     if item.cnt < 1 : raise exc.NotInBoundException('반환 문제 개수가 1개 이상이어야합니다.')
@@ -53,12 +53,12 @@ async def recommand(item : Item) -> list:
 
     problems += 1000
     rand_idx = random.sample(range(len(problems)),item.cnt)
-    recommand_num = problems[rand_idx].tolist()
+    recommend_num = problems[rand_idx].tolist()
 
     print(f"{item.model}로 추천")
-    print(f"추천 번호 : {recommand_num}")
+    print(f"추천 번호 : {recommend_num}")
 
-    return recommand_num
+    return recommend_num
 
 ###### 추천 모델 및 데이터 다시 불러오기 ######
 class M_Item(BaseModel):
