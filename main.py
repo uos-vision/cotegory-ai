@@ -31,7 +31,7 @@ class Item(BaseModel):
 @app.post(path = "/recommend", description="문제 추천")
 async def recommend(item : Item) -> list:
     if item.tag not in cf.selected_tags : raise exc.NotExistInListException('리스트에 없는 태그입니다.')
-    if item.cnt > cf.NUM_TOP_PROBLEMS : raise exc.NotInBoundException('반환 문제 개수가 top sampling 문제 개수를 초과합니다.')
+    if item.cnt > cf.num_problem : raise exc.NotInBoundException('반환 문제 개수가 전체 문제 개수를 초과합니다.')
     if item.cnt < 1 : raise exc.NotInBoundException('반환 문제 개수가 1개 이상이어야합니다.')
 
     if item.handle is not None:
