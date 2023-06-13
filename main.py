@@ -45,7 +45,7 @@ async def recommend(item : Item) -> list:
         # 유저가 푼 문제와 관련이 높은 문제 추천
         result[user_problem.nonzero()] = -np.inf
         result = np.expand_dims(result[0][cf.selected_probs_by_tags[item.tag]], axis=0)
-        top_idx_by_user = bn.argpartition(-result, cf.NUM_TOP_PROBLEMS, axis=1)[:, :cf.NUM_TOP_PROBLEMS][0]  # 값이 큰 10개 문제 고름
+        top_idx_by_user = bn.argpartition(-result, cf.NUM_TOP_PROBLEMS, axis=1)[:, :cf.NUM_TOP_PROBLEMS][0]  # 값이 큰 cnt개 문제 고름
         problems = np.array([cf.idx_to_num[item.tag][idx] for idx in top_idx_by_user])
     else:
         # 랜덤 추천
