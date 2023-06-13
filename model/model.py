@@ -46,7 +46,7 @@ def get_model(model_name, model_src_file_name):
             )
             print(f"{model_name} - device : {device}")
             rec_model = AutoEncoder(cf.num_problem, K=1024, device=device)
-            rec_model.load_state_dict(torch.load(model_path))
+            rec_model.load_state_dict(torch.load(model_path, map_location=torch.device(device)))
             rec_model.eval()
     except Exception as e:
         print(e)
